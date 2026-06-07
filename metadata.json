@@ -1,0 +1,6 @@
+{
+  "name": "TN Tour",
+  "description": "Discover Tamil Nadu with personalized itineraries, heritage guides, and a localized travel journal.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
