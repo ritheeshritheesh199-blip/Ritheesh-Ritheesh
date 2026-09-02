@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SmartStudy Ultimate</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:Inter,system-ui,Arial,sans-serif}
+:root{--bg:#070b16;--panel:#101827;--panel2:#151f31;--text:#f8fafc;--muted:#94a3b8;--line:#26334b;--primary:#8b5cf6;--primary2:#6366f1;--green:#22c55e;--yellow:#f59e0b;--red:#ef4444}
+body{background:radial-gradient(circle at 10% 0,#28115a 0,transparent 30%),radial-gradient(circle at 100% 20%,#102b55 0,transparent 28%),var(--bg);color:var(--text);min-height:100vh}
+header{height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 5%;background:#080d18dd;border-bottom:1px solid var(--line);backdrop-filter:blur(18px);position:sticky;top:0;z-index:30}
+.logo{font-size:23px;font-weight:950}.logo b{color:#a78bfa}.pro{font-size:9px;color:#c4b5fd;border:1px solid #8b5cf655;border-radius:20px;padding:4px 7px;margin-left:5px}
+nav{display:flex;gap:5px}nav button{background:transparent;box-shadow:none;color:var(--muted);border:1px solid transparent;padding:9px 11px}nav button:hover{color:#fff;background:#ffffff09}
+.container{max-width:1180px;margin:auto;padding:26px 18px 55px}
+.hero{position:relative;overflow:hidden;border:1px solid #8b5cf633;border-radius:28px;padding:32px;background:linear-gradient(135deg,#21124a,#141d3b 58%,#0c172c);box-shadow:0 25px 80px #0006;margin-bottom:18px}
+.hero:before{content:"";position:absolute;width:300px;height:300px;right:-100px;top:-120px;border-radius:50%;background:#8b5cf655;filter:blur(70px)}
+.hero-content{position:relative;z-index:1;display:flex;justify-content:space-between;align-items:center;gap:20px}
+.badge{display:inline-block;background:#ffffff0c;border:1px solid #ffffff18;color:#c4b5fd;padding:7px 11px;border-radius:30px;font-size:11px;font-weight:800;margin-bottom:13px}
+h1{font-size:40px;line-height:1.08;margin-bottom:10px}.hero p{color:#cbd5e1;max-width:650px;line-height:1.6}
+.hero-actions{display:flex;gap:9px;margin-top:20px}
+button{border:0;background:linear-gradient(135deg,var(--primary),var(--primary2));color:#fff;padding:11px 15px;border-radius:11px;font-weight:800;cursor:pointer;box-shadow:0 9px 25px #4f46e533}
+button.secondary{background:#ffffff0b;border:1px solid #ffffff17;box-shadow:none}
+.hero-icon{font-size:78px;filter:drop-shadow(0 15px 25px #0007)}
+.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:18px}
+.stat,.card{background:linear-gradient(145deg,#111a2b,#0e1625);border:1px solid var(--line);border-radius:19px;box-shadow:0 12px 40px #0003}
+.stat{padding:17px}.stat-top{display:flex;justify-content:space-between;color:var(--muted);font-size:12px}.stat h2{margin-top:8px;font-size:25px}
+.layout{display:grid;grid-template-columns:1.08fr .92fr;gap:18px}.card{padding:20px;margin-bottom:18px}.card h3{font-size:16px;margin-bottom:15px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}label{font-size:12px;color:var(--muted);display:block;margin:5px 0}
+input,textarea,select{width:100%;padding:12px;background:#090f1d;color:#fff;border:1px solid var(--line);border-radius:10px;outline:none;margin-bottom:10px}textarea{min-height:95px;resize:vertical}input:focus,textarea:focus,select:focus{border-color:var(--primary)}
+.subjects{display:flex;flex-wrap:wrap;gap:7px;margin:7px 0 14px}.subject{background:#24154d;border:1px solid #8b5cf633;color:#c4b5fd;padding:7px 10px;border-radius:30px;font-size:12px}.subject button{background:none;box-shadow:none;padding:0 2px;color:#c4b5fd}
+.progress-head{display:flex;justify-content:space-between;color:var(--muted);font-size:12px;margin-bottom:7px}.progress{height:11px;background:#080d18;border:1px solid #1e293b;border-radius:20px;overflow:hidden}.fill{height:100%;width:0;background:linear-gradient(90deg,#22c55e,#84cc16);transition:.4s}
+.task{display:flex;align-items:center;gap:11px;padding:13px;background:#ffffff04;border:1px solid var(--line);border-radius:12px;margin-bottom:8px}.task input{width:19px;height:19px;margin:0}.task.done span{text-decoration:line-through;color:#64748b}.task small{display:block;color:var(--muted);margin-top:3px}
+.timer{text-align:center}.mode{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px}.timer-display{font-size:56px;font-weight:950;letter-spacing:2px;color:#c4b5fd;margin:13px 0}.quick{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:10px}.quick button{padding:8px}
+.countdown{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.count-box{background:#ffffff05;border:1px solid var(--line);border-radius:12px;text-align:center;padding:12px}.count-box b{display:block;font-size:22px}.count-box span{font-size:10px;color:var(--muted)}
+.week{display:grid;grid-template-columns:repeat(7,1fr);gap:7px}.day{border:1px solid var(--line);border-radius:12px;padding:10px;min-height:100px;background:#ffffff03}.day strong{font-size:11px;color:#c4b5fd}.day p{font-size:11px;color:#cbd5e1;margin-top:9px;line-height:1.4}
+.tip{background:#8b5cf60b;border:1px solid #8b5cf61c;color:#cbd5e1;padding:13px;border-radius:12px;font-size:13px;line-height:1.55}
+.achievements{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.achievement{padding:12px;border:1px solid var(--line);border-radius:12px;color:#94a3b8;font-size:11px}.achievement.unlocked{color:#f8fafc;border-color:#8b5cf655;background:#8b5cf60b}
+.empty{text-align:center;color:var(--muted);padding:20px;font-size:13px}
+.toast{position:fixed;right:18px;bottom:18px;background:#151f31;border:1px solid var(--line);padding:13px 16px;border-radius:12px;display:none;z-index:100;box-shadow:0 18px 50px #0009}
+footer{text-align:center;color:#64748b;font-size:11px;padding:20px}
+@media(max-width:900px){.stats{grid-template-columns:repeat(3,1fr)}.layout{grid-template-columns:1fr}}
+@media(max-width:600px){nav{display:none}.hero-content{display:block}h1{font-size:29px}.hero-icon{display:none}.stats{grid-template-columns:1fr 1fr}.row{grid-template-columns:1fr}.week{grid-template-columns:repeat(2,1fr)}.achievements{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<header><div class="logo">📚 Smart<b>Study</b><span class="pro">ULTIMATE</span></div><nav><button onclick="go('dashboard')">Dashboard</button><button onclick="go('planner')">Planner</button><button onclick="go('focus')">Focus</button></nav></header>
+
+<div class="container" id="dashboard">
+<section class="hero"><div class="hero-content"><div><span class="badge">🎓 COLLEGE PROJECT • SMART LEARNING SYSTEM</span><h1>Turn your study time<br><span style="color:#a78bfa">into progress.</span></h1><p>One place to plan your subjects, manage daily tasks, focus with Pomodoro, track XP and stay ready for your exam.</p><div class="hero-actions"><button onclick="generatePlan()">🤖 Build My Plan</button><button class="secondary" onclick="go('planner')">⚙️ Customize</button></div></div><div class="hero-icon">🚀</div></div></section>
+
+<section class="stats">
+<div class="stat"><div class="stat-top"><span>🔥 Streak</span><span>🔥</span></div><h2 id="streak">0 days</h2></div>
+<div class="stat"><div class="stat-top"><span>📚 Subjects</span><span>📖</span></div><h2 id="subjectCount">0</h2></div>
+<div class="stat"><div class="stat-top"><span>✅ Done</span><span>🏆</span></div><h2 id="done">0</h2></div>
+<div class="stat"><div class="stat-top"><span>⚡ XP</span><span>⚡</span></div><h2 id="xp">0</h2></div>
+<div class="stat"><div class="stat-top"><span>🎖️ Level</span><span>⭐</span></div><h2 id="level">1</h2></div>
+</section>
+
+<div class="layout">
+<div>
+<section class="card" id="planner"><h3>🎯 Study Goal</h3><div class="row"><div><label>Exam date</label><input type="date" id="exam"></div><div><label>Daily study hours</label><input type="number" id="hours" min="1" max="16" value="3"></div></div><button onclick="saveGoal()">💾 Save Goal</button></section>
+
+<section class="card"><h3>📚 Subject Manager</h3><input id="subject" placeholder="Add a subject — e.g. Mathematics"><button onclick="addSubject()">+ Add Subject</button><div class="subjects" id="subjects"></div><button onclick="generatePlan()">🤖 Generate Smart Plan</button></section>
+
+<section class="card"><h3>📅 Weekly Roadmap</h3><div class="week" id="week"></div></section>
+
+<section class="card"><h3>🏆 Achievements</h3><div class="achievements" id="achievements"></div></section>
+</div>
+
+<div>
+<section class="card"><h3>📈 Today's Progress</h3><div class="progress-head"><span>Completion</span><b id="percent">0%</b></div><div class="progress"><div class="fill" id="fill"></div></div><div style="display:flex;justify-content:space-between;color:#64748b;font-size:11px;margin-top:9px"><span id="taskCount">0 tasks</span><span id="goalText">No exam date</span></div></section>
+
+<section class="card"><h3>⏳ Exam Countdown</h3><div class="countdown"><div class="count-box"><b id="cdDays">--</b><span>DAYS</span></div><div class="count-box"><b id="cdHours">--</b><span>HOURS</span></div><div class="count-box"><b id="cdMin">--</b><span>MINUTES</span></div></div></section>
+
+<section class="card timer" id="focus"><h3>⏱️ Focus Zone</h3><div class="mode" id="mode">Deep Focus • 25 min</div><div class="timer-display" id="timer">25:00</div><button onclick="startTimer()">▶ Start</button><button class="secondary" onclick="pauseTimer()">⏸ Pause</button><button class="secondary" onclick="resetTimer()">↻ Reset</button><div class="quick"><button onclick="setTimer(25)">25 min</button><button onclick="setTimer(50)">50 min</button><button onclick="setTimer(5)">5 min</button></div></section>
+
+<section class="card"><h3>📝 Quick Notes</h3><textarea id="notes" placeholder="Write a reminder, topic, assignment..."></textarea><button onclick="saveNotes()">💾 Save Notes</button></section>
+
+<section class="card"><h3>💡 Smart Tip</h3><div class="tip" id="tip"></div></section>
+</div>
+</div>
+
+<section class="card" id="tasks"><h3>📋 Today's Smart Tasks</h3><div id="taskBox"><div class="empty">Add subjects and tap “Generate Smart Plan”. ✨</div></div></section>
+</div>
+<footer>SmartStudy Ultimate © 2026 • Built for focused learners 🎓</footer>
+<div class="toast" id="toast"></div>
+
+<script>
+let subjects=JSON.parse(localStorage.getItem("su_subjects")||"[]");
+let tasks=JSON.parse(localStorage.getItem("su_tasks")||"[]");
+let xp=+localStorage.getItem("su_xp")||0,streak=+localStorage.getItem("su_streak")||0;
+let timerSeconds=1500,timerInterval=null;
+
+const $=x=>document.getElementById(x);
+function save(){localStorage.setItem("su_subjects",JSON.stringify(subjects));localStorage.setItem("su_tasks",JSON.stringify(tasks));localStorage.setItem("su_xp",xp);localStorage.setItem("su_streak",streak)}
+function toast(x){$("toast").textContent=x;$("toast").style.display="block";setTimeout(()=>$("toast").style.display="none",2200)}
+function go(id){$(id).scrollIntoView({behavior:"smooth"})}
+function addSubject(){let v=$("subject").value.trim();if(!v)return toast("Type a subject 🙂");if(subjects.some(s=>s.toLowerCase()===v.toLowerCase()))return toast("Already added!");subjects.push(v);$("subject").value="";renderSubjects();save();toast("📚 Subject added!")}
+function removeSubject(i){subjects.splice(i,1);renderSubjects();save()}
+function renderSubjects(){$("subjects").innerHTML=subjects.map((s,i)=>`<div class="subject">${s} <button onclick="removeSubject(${i})">×</button></div>`).join("");$("subjectCount").textContent=subjects.length}
+function generatePlan(){
+ if(!subjects.length)return toast("⚠️ Add at least one subject");
+ let h=+$("hours").value||3,each=Math.max(.5,Math.round(h/subjects.length*10)/10);
+ tasks=subjects.map((s,i)=>({id:Date.now()+i,title:`Master ${s}`,time:`${each} hour${each>1?"s":""}`,done:false}));
+ renderTasks();update();renderWeek();save();toast("🤖 Smart plan generated! 🔥");
+}
+function renderTasks(){if(!tasks.length){$("taskBox").innerHTML='<div class="empty">No tasks yet. Generate your plan ✨</div>';return}$("taskBox").innerHTML=tasks.map(t=>`<div class="task ${t.done?"done":""}"><input type="checkbox" ${t.done?"checked":""} onchange="toggleTask(${t.id})"><span><b>${t.title}</b><small>⏱️ ${t.time}</small></span></div>`).join("")}
+function toggleTask(id){let t=tasks.find(x=>x.id===id);if(!t)return;t.done=!t.done;if(t.done){xp+=50;streak++;toast("🏆 +50 XP! Task completed")}else{xp=Math.max(0,xp-50);streak=Math.max(0,streak-1)}update();renderAchievements();save()}
+function update(){
+ let done=tasks.filter(t=>t.done).length,p=tasks.length?Math.round(done/tasks.length*100):0,level=Math.floor(xp/250)+1;
+ $("done").textContent=done;$("percent").textContent=p+"%";$("fill").style.width=p+"%";$("taskCount").textContent=tasks.length+" task"+(tasks.length===1?"":"s");$("xp").textContent=xp;$("level").textContent=level;$("streak").textContent=streak+" day"+(streak===1?"":"s");
+ let d=localStorage.getItem("su_exam");$("goalText").textContent=d?"Exam: "+new Date(d+"T00:00:00").toLocaleDateString("en-IN",{day:"2-digit",month:"short"}):"No exam date";countdown()
+}
+function saveGoal(){let d=$("exam").value;if(!d)return toast("📅 Select exam date");localStorage.setItem("su_exam",d);localStorage.setItem("su_hours",$("hours").value);update();toast("✅ Goal saved!")}
+function countdown(){let d=localStorage.getItem("su_exam");if(!d){$("cdDays").textContent="--";$("cdHours").textContent="--";$("cdMin").textContent="--";return}let diff=new Date(d+"T23:59:59")-new Date();if(diff<0){$("cdDays").textContent="0";$("cdHours").textContent="0";$("cdMin").textContent="0";return}$("cdDays").textContent=Math.floor(diff/86400000);$("cdHours").textContent=Math.floor(diff/3600000)%24;$("cdMin").textContent=Math.floor(diff/60000)%60}
+setInterval(countdown,30000)
+function setTimer(min){pauseTimer();timerSeconds=min*60;$("mode").textContent=`Deep Focus • ${min} min`;updateTimer()}
+function startTimer(){if(timerInterval)return;timerInterval=setInterval(()=>{if(timerSeconds<=0){pauseTimer();xp+=25;update();save();toast("🎉 Focus complete! +25 XP");return}timerSeconds--;updateTimer()},1000);toast("🔥 Focus started")}
+function pauseTimer(){clearInterval(timerInterval);timerInterval=null}
+function resetTimer(){pauseTimer();timerSeconds=1500;$("mode").textContent="Deep Focus • 25 min";updateTimer()}
+function updateTimer(){let m=Math.floor(timerSeconds/60),s=timerSeconds%60;$("timer").textContent=String(m).padStart(2,"0")+":"+String(s).padStart(2,"0")}
+function saveNotes(){localStorage.setItem("su_notes",$("notes").value);toast("📝 Notes saved!")}
+function renderWeek(){let names=["Mon","Tue","Wed","Thu","Fri","Sat","Sun"],s=subjects.length?subjects:["Study"];$("week").innerHTML=names.map((n,i)=>`<div class="day"><strong>${n}</strong><p>${s[i%s.length]}<br><br>Focus session</p></div>`).join("")}
+function renderAchievements(){let level=Math.floor(xp/250)+1,arr=[["🌱","First Step",tasks.some(t=>t.done)],["🔥","7 Day Energy",streak>=7],["⚡","250 XP",xp>=250],["🏆","500 XP",xp>=500],["🎓","Level 5",level>=5],["💯","Perfect Plan",tasks.length>0&&tasks.every(t=>t.done)]];$("achievements").innerHTML=arr.map(a=>`<div class="achievement ${a[2]?"unlocked":""}">${a[0]} <b>${a[1]}</b><br><small>${a[2]?"Unlocked ✓":"Locked"}</small></div>`).join("")}
+let tips=["Active recall beats passive rereading. 🧠","Put your phone away during focus time. 📵","Start with the hardest topic while energy is high. ⚡","Short focused sessions beat long distracted sessions. 🎯","Consistency beats last-minute cramming. 🔥"];$("tip").textContent=tips[new Date().getDate()%tips.length];
+function load(){renderSubjects();renderTasks();renderWeek();renderAchievements();update();let d=localStorage.getItem("su_exam"),h=localStorage.getItem("su_hours"),n=localStorage.getItem("su_notes");if(d)$("exam").value=d;if(h)$("hours").value=h;if(n)$("notes").value=n}
+load();
+</script>
+</body>
+</html>
